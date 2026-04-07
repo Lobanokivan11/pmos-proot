@@ -37,7 +37,7 @@ jobs:
           ccache_size = 5G
           systemd = always
           EOF
-          pmbootstrap --details-to-stdout install
+          pmbootstrap --details-to-stdout install --config "~/.config/pmbootstrap.conf"
           mkdir -p output/postmarketos
           ls -la $WORK_DIR
           sudo cp -a "$WORK_DIR/chroot_rootfs_qemu-aarch64/." output/postmarketos/

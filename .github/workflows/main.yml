@@ -30,7 +30,7 @@ jobs:
             --ui "none" \
             --user "default" \
             --extra-packages "nano,bash,gcompat,libc6-compat"
-          sed -i '/\[pmbootstrap\]/a systemd = always' ~/.config/pmbootstrap.conf
+          pmbootstrap config systemd always
           pmbootstrap --details-to-stdout install --password 147147
           mkdir -p output/postmarketos
           ls -la $WORK_DIR

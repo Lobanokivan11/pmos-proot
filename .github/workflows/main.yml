@@ -22,12 +22,12 @@ jobs:
           WORK_DIR="/home/runner/work/pmbootstrap"
           mkdir -p "$WORK_DIR/cache_git"
           mkdir -p ~/.config
-          git clone --depth=1 https://gitlab.postmarketos.org/postmarketOS/pmaports.git "$WORK_DIR/cache_git/pmaports"
+          git clone https://gitlab.postmarketos.org/postmarketOS/pmaports.git "/home/runner/.local/var/pmbootstrap/cache_git/pmaports"
           cat <<EOF > ~/.config/pmbootstrap.conf
           [pmbootstrap]
           is_initialized = True
           work = $WORK_DIR
-          aports = $WORK_DIR/cache_git/pmaports
+          aports = /home/runner/.local/var/pmbootstrap/cache_git/pmaports
           jobs = $(nproc)
           device = qemu-aarch64
           extra_packages = none

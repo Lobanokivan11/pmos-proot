@@ -35,11 +35,12 @@ jobs:
       - name: Create Tarball
         run: |
           export PATH="$HOME/.local/bin:$PATH"
+          WORK_DIR="/home/runner/work/pmbootstrap"
           pmbootstrap shutdown
-          cd output/postmarketos
-          sudo tar -chJf --numeric-owner ../postmarketos-aarch64.tar.xz .
-          cd ../..
-          sudo chown $USER:$USER output/postmarketos-aarch64.tar.xz
+          cd $WORK_DIR/chroot_rootfs_qemu-aarch64
+          sudo tar -chJf --numeric-owner $HOME/output/postmarketos-aarch64.tar.xz .
+          cd $HOME/output
+          sudo chown $USER:$USER postmarketos-aarch64.tar.xz
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4

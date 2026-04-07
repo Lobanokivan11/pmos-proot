@@ -20,25 +20,21 @@ jobs:
         run: |
           export PATH="$HOME/.local/bin:$PATH"
           WORK_DIR="/home/runner/work/pmbootstrap"
-          mkdir -p "$WORK_DIR/cache_git"
-          mkdir -p ~/.config
-          git clone https://gitlab.postmarketos.org/postmarketOS/pmaports.git "/home/runner/.local/var/pmbootstrap/cache_git/pmaports"
-          cat <<EOF > ~/.config/pmbootstrap_v3.cfg
-          [pmbootstrap]
-          work = $WORK_DIR
-          device = qemu-aarch64
-          extra_packages = nano,bash,gcompat,libc6-compat
-          is_default_channel = False
-          kernel = mainline
-          systemd = always
-          ui = none
-          user = default
-          EOF
-          pmbootstrap -c "$HOME/.config/pmbootstrap_v3.cfg" --details-to-stdout install --password 147147
+          pmbootstrap init \
+            --path "$WORK_DIR" \
+            --mirror-alpine "https://dl-cdn.alpinelinux.org/alpine/edge/main" \
+            --repository-postmarketos "http://mirror.postmarketos.org/postmarketos/main" \
+            --channel "edge" \
+            --vendor "qemu" \
+            --device "aarch64" \
+            --ui "none" \
+            --user "default" \
+            --extra-packages "nano,bash,gcompat,libc6-compat"
+          sed -i '/\[pmbootstrap\]/a systemd = always' ~/.config/pmbootstrap.conf
+          pmbootstrap --details-to-stdout install --password 147147
           mkdir -p output/postmarketos
           ls -la $WORK_DIR
           sudo cp -a "$WORK_DIR/chroot_rootfs_qemu-aarch64/." output/postmarketos/
-
 
       - name: Create Tarball
         run: |

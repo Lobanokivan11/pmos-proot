@@ -23,7 +23,7 @@ jobs:
           mkdir -p "$WORK_DIR/cache_git"
           mkdir -p ~/.config
           git clone https://gitlab.postmarketos.org/postmarketOS/pmaports.git "/home/runner/.local/var/pmbootstrap/cache_git/pmaports"
-          cat <<EOF > ~/.config/pmbootstrap.conf
+          cat <<EOF > ~/.config/pmbootstrap_v3.cfg
           [pmbootstrap]
           work = $WORK_DIR
           device = qemu-aarch64
@@ -34,7 +34,7 @@ jobs:
           ui = none
           user = default
           EOF
-          pmbootstrap -c "$HOME/.config/pmbootstrap.conf" --details-to-stdout install --password 147147
+          pmbootstrap -c "$HOME/.config/pmbootstrap_v3.cfg" --details-to-stdout install --password 147147
           mkdir -p output/postmarketos
           ls -la $WORK_DIR
           sudo cp -a "$WORK_DIR/chroot_rootfs_qemu-aarch64/." output/postmarketos/

@@ -19,16 +19,17 @@ jobs:
       - name: Build postmarketOS Rootfs
         run: |
           export PATH="$HOME/.local/bin:$PATH"
-          pmbootstrap init \
-            --work="/home/runner/work/pmbootstrap" \
-            --arch="aarch64" \
-            --device="qemu-aarch64" \
-            --ui="none" \
-            --no-confirm
-          pmbootstrap config systemd always
-          pmbootstrap install --no-kernel --no-fstab
+          WORK_DIR="/home/runner/work/pmbootstrap"
+          pmbootstrap -w "$WORK_DIR" config work "$WORK_DIR"
+          pmbootstrap -w "$WORK_DIR" config device qemu-aarch64
+          pmbootstrap -w "$WORK_DIR" config extra_packages none
+          pmbootstrap -w "$WORK_DIR" config ui none
+          pmbootstrap -w "$WORK_DIR" init --no-confirm
+          pmbootstrap -w "$WORK_DIR" config systemd always
+          pmbootstrap -w "$WORK_DIR" install --no-kernel --no-fstab
           mkdir -p output/postmarketos
-          sudo cp -a /home/runner/work/pmbootstrap/chroot_native/mnt/rootfs_qemu-aarch64/. output/postmarketos/
+          ls -la $WORK_DIR
+          sudo cp -a "$WORK_DIR/chroot_rootfs_qemu-aarch64/." output/postmarketos/
 
       - name: Create Tarball
         run: |

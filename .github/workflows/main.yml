@@ -1,0 +1,42 @@
+name: Build postmarketOS Rootfs
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y python3-pip openssl tar xz-utils
+          pip3 install --user pmbootstrap
+
+      - name: Build postmarketOS Rootfs
+        run: |
+          export PATH="$HOME/.local/bin:$PATH"
+          pmbootstrap init --mirror-pmOS="http://postmarketos.org" \
+            --work="/home/runner/work/pmbootstrap" \
+            --arch="aarch64" \
+            --device="qemu-aarch64" \
+            --ui="none" \
+            --no-confirm
+          pmbootstrap install --no-fstab --no-kernel
+          mkdir -p output/postmarketos
+          sudo cp -a /home/runner/work/pmbootstrap/chroot_native/mnt/rootfs_qemu-aarch64/. output/postmarketos/
+
+      - name: Create Tarball
+        run: |
+          cd output
+          # proot-distro ожидает, что содержимое находится в подпапке (strip-components=1)
+          tar -cJf postmarketos-aarch64.tar.xz postmarketos
+          
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: pmos-rootfs
+          path: output/postmarketos-aarch64.tar.xz

@@ -30,8 +30,9 @@ jobs:
       - name: Create Tarball
         run: |
           cd output
-          tar -cJf postmarketos-aarch64.tar.xz postmarketos
-          
+          sudo tar -cJf postmarketos-aarch64.tar.xz postmarketos
+          sudo chown $USER:$USER postmarketos-aarch64.tar.xz
+
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:

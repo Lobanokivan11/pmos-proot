@@ -19,13 +19,13 @@ jobs:
       - name: Build postmarketOS Rootfs
         run: |
           export PATH="$HOME/.local/bin:$PATH"
-          pmbootstrap init --mirror-pmOS="http://postmarketos.org" \
+          pmbootstrap init \
             --work="/home/runner/work/pmbootstrap" \
             --arch="aarch64" \
             --device="qemu-aarch64" \
             --ui="none" \
             --no-confirm
-          pmbootstrap install --no-fstab --no-kernel
+          pmbootstrap install
           mkdir -p output/postmarketos
           sudo cp -a /home/runner/work/pmbootstrap/chroot_native/mnt/rootfs_qemu-aarch64/. output/postmarketos/
 
@@ -39,3 +39,10 @@ jobs:
         with:
           name: pmos-rootfs
           path: output/postmarketos-aarch64.tar.xz
+      - name: Pmos Proot Image
+        uses: softprops/action-gh-release@v1
+        with:
+          body: image of pmos for proot
+          tag_name: github_run
+          name: pmos proot build
+          files: output/postmarketos-aarch64.tar.xz

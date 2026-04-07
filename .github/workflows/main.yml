@@ -20,17 +20,15 @@ jobs:
         run: |
           export PATH="$HOME/.local/bin:$PATH"
           WORK_DIR="/home/runner/work/pmbootstrap"
-          pmbootstrap init \
-            --path "$WORK_DIR" \
-            --mirror-alpine "https://dl-cdn.alpinelinux.org/alpine/edge/main" \
-            --repository-postmarketos "http://mirror.postmarketos.org/postmarketos/main" \
-            --channel "edge" \
-            --vendor "qemu" \
-            --device "aarch64" \
-            --ui "none" \
-            --user "default" \
-            --extra-packages "nano,bash,gcompat,libc6-compat"
+          pmbootstrap config work "$WORK_DIR"
+          pmbootstrap config jobs 4
+          pmbootstrap config channel edge
+          pmbootstrap config device qemu-aarch64
+          pmbootstrap config ui none
+          pmbootstrap config user default
+          pmbootstrap config extra_packages "nano,bash,gcompat,libc6-compat"
           pmbootstrap config systemd always
+          pmbootstrap init --quiet
           pmbootstrap --details-to-stdout install --password 147147
           mkdir -p output/postmarketos
           ls -la $WORK_DIR

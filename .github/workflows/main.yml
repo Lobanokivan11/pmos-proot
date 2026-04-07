@@ -20,6 +20,9 @@ jobs:
         run: |
           export PATH="$HOME/.local/bin:$PATH"
           WORK_DIR="/home/runner/work/pmbootstrap"
+          mkdir -p ~/.config
+          touch ~/.config/pmbootstrap.conf
+          touch ~/.config/pmbootstrap_v3.cfg
           pmbootstrap config work "$WORK_DIR"
           pmbootstrap config jobs 4
           pmbootstrap config channel edge
@@ -28,7 +31,7 @@ jobs:
           pmbootstrap config user default
           pmbootstrap config extra_packages "nano,bash,gcompat,libc6-compat"
           pmbootstrap config systemd always
-          pmbootstrap init --quiet
+          echo "" | pmbootstrap init --quiet
           pmbootstrap --details-to-stdout install --password 147147
           mkdir -p output/postmarketos
           ls -la $WORK_DIR

@@ -33,7 +33,7 @@ jobs:
           extra_packages = none
           ui = none
           channel = edge
-          mirrors_postmarketos = http://postmarketos.org
+          mirrors_postmarketos = https://mirror.postmarketos.org/postmarketos/main
           ccache_size = 5G
           systemd = always
           EOF

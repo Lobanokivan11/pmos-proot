@@ -20,16 +20,13 @@ jobs:
         run: |
           export PATH="$HOME/.local/bin:$PATH"
           WORK_DIR="/home/runner/work/pmbootstrap"
-          pmbootstrap -w "$WORK_DIR" config work "$WORK_DIR"
-          pmbootstrap -w "$WORK_DIR" config device qemu-aarch64
-          pmbootstrap -w "$WORK_DIR" config extra_packages none
-          pmbootstrap -w "$WORK_DIR" config ui none
-          pmbootstrap -w "$WORK_DIR" init --no-confirm
+          mkdir -p "$WORK_DIR"
+          pmbootstrap -w "$WORK_DIR" init --device="qemu-aarch64" --ui="none" --no-confirm
           pmbootstrap -w "$WORK_DIR" config systemd always
           pmbootstrap -w "$WORK_DIR" install --no-kernel --no-fstab
           mkdir -p output/postmarketos
           ls -la $WORK_DIR
-          sudo cp -a "$WORK_DIR/chroot_rootfs_qemu-aarch64/." output/postmarketos/
+          sudo cp -a "$WORK_DIR"/chroot_rootfs_qemu-aarch64/. output/postmarketos/
 
       - name: Create Tarball
         run: |

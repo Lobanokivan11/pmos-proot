@@ -36,6 +36,7 @@ jobs:
           WORK_DIR="/home/runner/work/pmbootstrap"
           pmbootstrap shutdown
           mkdir $HOME/output
+          sudo findmnt -l | grep "$WORK_DIR" | awk '{print $1}' | xargs -r sudo umount -l
           cd $WORK_DIR/chroot_rootfs_qemu-aarch64
           sudo tar -chJf --numeric-owner $HOME/output/postmarketos-aarch64.tar.xz .
           cd $HOME/output

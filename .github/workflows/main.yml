@@ -25,7 +25,7 @@ jobs:
             --device="qemu-aarch64" \
             --ui="none" \
             --no-confirm
-          pmbootstrap install
+          pmbootstrap install --no-kernel --no-fstab
           mkdir -p output/postmarketos
           sudo cp -a /home/runner/work/pmbootstrap/chroot_native/mnt/rootfs_qemu-aarch64/. output/postmarketos/
 

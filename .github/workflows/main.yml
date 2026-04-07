@@ -34,6 +34,8 @@ jobs:
 
       - name: Create Tarball
         run: |
+          export PATH="$HOME/.local/bin:$PATH"
+          pmbootstrap shutdown
           cd output/postmarketos
           sudo tar -chJf --numeric-owner ../postmarketos-aarch64.tar.xz .
           cd ../..

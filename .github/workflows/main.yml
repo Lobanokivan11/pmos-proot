@@ -32,7 +32,6 @@ jobs:
       - name: Create Tarball
         run: |
           cd output
-          # proot-distro ожидает, что содержимое находится в подпапке (strip-components=1)
           tar -cJf postmarketos-aarch64.tar.xz postmarketos
           
       - name: Upload Artifact

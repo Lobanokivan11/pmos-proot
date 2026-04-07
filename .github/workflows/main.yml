@@ -26,7 +26,8 @@ jobs:
           pmbootstrap config work "$WORK_DIR"
           pmbootstrap config jobs 4
           pmbootstrap config channel edge
-          pmbootstrap config device qemu-aarch64
+          pmbootstrap config device_vendor qemu
+          pmbootstrap config device aarch64
           pmbootstrap config ui none
           pmbootstrap config user default
           pmbootstrap config extra_packages "nano,bash,gcompat,libc6-compat"

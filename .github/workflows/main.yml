@@ -21,10 +21,21 @@ jobs:
           export PATH="$HOME/.local/bin:$PATH"
           WORK_DIR="/home/runner/work/pmbootstrap"
           mkdir -p "$WORK_DIR"
-          printf "$WORK_DIR\nqemu\naarch64\nnone\n" | pmbootstrap init --y
-          pmbootstrap -w "$WORK_DIR" config systemd always
-          pmbootstrap -w "$WORK_DIR" install --no-kernel --no-fstab
-          ls -la $WORK_DIR
+          mkdir -p ~/.config
+          cat <<EOF > ~/.config/pmbootstrap.conf
+          [pmbootstrap]
+          is_initialized = True
+          work = $WORK_DIR
+          jobs = $(nproc)
+          device = qemu-aarch64
+          extra_packages = none
+          ui = none
+          channel = edge
+          ccache_size = 5G
+          systemd = always
+          EOF
+          pmbootstrap init
+          pmbootstrap install --no-kernel --no-fstab
           mkdir -p output/postmarketos
           sudo cp -a "$WORK_DIR/chroot_rootfs_qemu-aarch64/." output/postmarketos/
 

@@ -42,7 +42,7 @@ jobs:
           sudo umount -l "$WORK_DIR/chroot_rootfs_qemu-aarch64/dev" || true
           sudo umount -l "$WORK_DIR/chroot_rootfs_qemu-aarch64/sys" || true
           cd "$WORK_DIR/chroot_rootfs_qemu-aarch64"
-          sudo tar --hard-dereference --one-file-system --ignore-failed-read --numeric-owner --exclude='./dev/*' --exclude='./proc/*' --exclude='./run/*' --exclude='./sys/*' --exclude='./var/cache/apk/*' -cJf /home/runner/output/postmarketos-aarch64.tar.xz .
+          sudo tar --no-xattrs --no-selinux --hard-dereference --one-file-system --ignore-failed-read --numeric-owner --exclude='./dev/*' --exclude='./proc/*' --exclude='./run/*' --exclude='./sys/*' --exclude='./var/cache/apk/*' -cJf /home/runner/output/postmarketos-aarch64.tar.xz .
           sudo chown $USER:$USER /home/runner/output/postmarketos-aarch64.tar.xz
 
 

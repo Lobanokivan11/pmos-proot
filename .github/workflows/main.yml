@@ -37,8 +37,12 @@ jobs:
           pmbootstrap shutdown
           mkdir -p /home/runner/output
           sudo findmnt -l | grep "$WORK_DIR" | awk '{print $1}' | xargs -r sudo umount -l
+          sudo thin-check /dev/mapper/pmbootstrap_p1 || true
+          sudo umount -l "$WORK_DIR/chroot_rootfs_qemu-aarch64/proc" || true
+          sudo umount -l "$WORK_DIR/chroot_rootfs_qemu-aarch64/dev" || true
+          sudo umount -l "$WORK_DIR/chroot_rootfs_qemu-aarch64/sys" || true
           cd "$WORK_DIR/chroot_rootfs_qemu-aarch64"
-          sudo tar -cJf /home/runner/output/postmarketos-aarch64.tar.xz .
+          sudo tar --numeric-owner --exclude='./dev/*' --exclude='./proc/*' --exclude='./run/*' --exclude='./sys/*' --exclude='./var/cache/apk/*' -cJf /home/runner/output/postmarketos-aarch64.tar.xz .
           sudo chown $USER:$USER /home/runner/output/postmarketos-aarch64.tar.xz
 
 

@@ -42,7 +42,7 @@ jobs:
           sudo umount -l "$WORK_DIR/chroot_rootfs_qemu-aarch64/dev" || true
           sudo umount -l "$WORK_DIR/chroot_rootfs_qemu-aarch64/sys" || true
           cd "$WORK_DIR/chroot_rootfs_qemu-aarch64"
-          sudo tar --numeric-owner --exclude='./dev/*' --exclude='./proc/*' --exclude='./run/*' --exclude='./sys/*' --exclude='./var/cache/apk/*' -cJf /home/runner/output/postmarketos-aarch64.tar.xz .
+          sudo tar --hard-dereference --dereference --numeric-owner --exclude='./dev/*' --exclude='./proc/*' --exclude='./run/*' --exclude='./sys/*' --exclude='./var/cache/apk/*' -cJf /home/runner/output/postmarketos-aarch64.tar.xz .
           sudo chown $USER:$USER /home/runner/output/postmarketos-aarch64.tar.xz
 
 

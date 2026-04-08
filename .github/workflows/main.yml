@@ -26,7 +26,7 @@ jobs:
           export PATH="$HOME/.local/bin:$PATH"
           WORK_DIR="/home/runner/work/pmbootstrap"
           mkdir -p "$WORK_DIR"
-          printf "$WORK_DIR\n\nedge\nqemu\naarch64\nstable\ndefault\n\n\n\nnone\nalways\nn\nnano,bash,gcompat,doas,libc6-compat\n\n\n\n\n\n\n\n\n" | pmbootstrap init
+          printf "$WORK_DIR\n\nedge\nqemu\naarch64\nmainline\ndefault\n\n\n\nnone\nalways\nn\nnano,bash,gcompat,doas,libc6-compat\n\n\n\n\n\n\n\n\n" | pmbootstrap init
           pmbootstrap --details-to-stdout install --password 147147
           ls -la "$WORK_DIR"
 
